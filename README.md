@@ -11,7 +11,7 @@ Some functions to deal with common operations in date, hour and calendar.
 ## 3 - db_tricks.py
 Usefull tools to deal with SQLite databases.
 
-## 4 - email.py
+## 4 - e-mail.py
 Email senders with or without attachments.
 
 ## 5 - encryption.py
@@ -25,4 +25,7 @@ Easily transform html strings to a pdf file.
 
 ## 8 - utf8_ajust.py
 Some functions to deal with utf8 incompatibilities in strings.
+
+## 9 - get_ip.py
+Fetch IP address of the machine running the code.
 
