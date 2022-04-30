@@ -25,7 +25,7 @@ def time_parse(hour):
         subtraction.append(sub)
     match = min(subtraction)
     index = subtraction.index(match)
-    return str(times[index])
+    return index
 
 
 def data(res, day):
