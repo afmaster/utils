@@ -1,5 +1,5 @@
 # utils
-Utilities for python programing
+Utilities for python programing. See requirements.txt.
 
 ## 1 - config.py
 
