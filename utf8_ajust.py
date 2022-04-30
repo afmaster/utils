@@ -22,3 +22,8 @@ def replacing(string_para_salvar):
     st = st.replace("ç", "c")
     st = st.replace("Ç", "C")
     return st
+
+def ajust_to_sql(par):
+    str_par = str(par)
+    parsed_par = str_par.replace("'", '"')
+    return parsed_par
