@@ -17,8 +17,10 @@ Email senders with or without attachments.
 ## 5 - encryption.py
 Functions to encrypt and decrypt data.
 
-## 6 - forecast.py
+## 6 - forecast_wttr.py and forecast_openweather.py
 Several variables can be fetched by using these functions (temperature, wind orientation, wind speed, chance of rainning, and others).
+For [WTTR](https://wttr.in), please use forecast_wttr.py. 
+For [Open Weather Map](https://https://openweathermap.org), the conf.py file must contain your API token. We advice to clone this repository and edit de conf.py file before installing it via ```pip install git+ ``` command.
 
 ## 7 - html_to_pdf.py
 Easily transform html strings to a pdf file.
