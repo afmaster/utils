@@ -65,7 +65,7 @@ def create_db(db_file: str, db: str,  dic: dict) -> None:
     columns_length = len(list(dic.items()))
 
     #Creating string for sql command for creating bd
-    part_1_create_table_sql = f"CREATE TABLE IF NOT EXIST {db} ("
+    part_1_create_table_sql = f"CREATE TABLE IF NOT EXISTS {db} ("
     for r in range(0, columns_length):
         part_1_create_table_sql = part_1_create_table_sql + str(list(dic.keys())[r]) + " TEXT"
         if r < (columns_length - 1):
@@ -107,7 +107,7 @@ def update_db(db_file: str, db: str, field: str, criteria: str, dic: dict) -> No
     columns_length = len(list(dic.items()))
 
     #Creating string for sql command for creating bd
-    part_1_create_table_sql = f"CREATE TABLE IF NOT EXIST {db} ("
+    part_1_create_table_sql = f"CREATE TABLE IF NOT EXISTS {db} ("
     for r in range(0, columns_length):
         part_1_create_table_sql = part_1_create_table_sql + str(list(dic.keys())[r]) + " TEXT"
         if r < (columns_length - 1):
