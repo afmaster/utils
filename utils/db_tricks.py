@@ -1,5 +1,12 @@
 import sqlite3
 
+# Ajust dict to be used in sqlite functions
+
+def ajust_to_sql(par):
+    str_par = str(par)
+    parsed_par = str_par.replace("'", '"')
+    return parsed_par
+
 def search_db(db_file: str, db: str, field: str, criteria: str) -> str or None:
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
