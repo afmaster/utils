@@ -57,6 +57,41 @@ def delete_all_rows(db_file: str, db: str) -> None:
     conn.close()
 
 
+def create_db(db_file: str, db: str,  dic: dict) -> None:
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+
+    #define columns
+    columns_length = len(list(dic.items()))
+
+    #Creating string for sql command for creating bd
+    part_1_create_table_sql = f"CREATE TABLE IF NOT EXIST {db} ("
+    for r in range(0, columns_length):
+        part_1_create_table_sql = part_1_create_table_sql + str(list(dic.keys())[r]) + " TEXT"
+        if r < (columns_length - 1):
+            part_1_create_table_sql = part_1_create_table_sql + ", "
+
+    create_table_sql = part_1_create_table_sql + ");"
+
+    # criar BD
+    c.execute(create_table_sql)
+
+    # Inserir linha
+
+    sqlite_insert_row = f"INSERT INTO {db} VALUES ("
+    for r in range(0, columns_length):
+        sqlite_insert_row = sqlite_insert_row + "?"
+        if r < (columns_length - 1):
+            sqlite_insert_row = sqlite_insert_row + ", "
+    sqlite_insert_row = sqlite_insert_row + ")"
+
+    params = tuple(dic.values())
+    c.execute(sqlite_insert_row, params)
+    conn.commit()
+    c.close()
+    conn.close()
+
+
 def update_db(db_file: str, db: str, field: str, criteria: str, dic: dict) -> None:
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
