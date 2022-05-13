@@ -22,6 +22,31 @@ def search_db(db_file: str, db: str, field: str, criteria: str) -> str or None:
         conn.close()
         return None
 
+# return an entire row
+    
+def search_row(db_file: str, db: str, field: str, criteria: str) -> str or None:
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+    try:
+        table = list(c.execute(f"SELECT * FROM {db}").description)
+        c.execute(f"SELECT * FROM {db}")
+        results = c.fetchall()
+        for col in table:
+            if col[0] == field:
+                i = table.index(col)
+                for row in results:
+                    if row[i] == criteria:
+                        return row
+                    else:
+                        continue
+            else:
+                continue
+        return None
+    except:
+        c.close()
+        conn.close()
+        return None
+    
 
 def fetch_all(db_file: str, db: str, field: str) -> str or None:
     conn = sqlite3.connect(db_file)
