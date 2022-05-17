@@ -65,6 +65,7 @@ requirements = [
     'Markdown>=3.3.6',
     'Pillow>=9.1.0',
     'premailer>=3.10.0',
+    'prettytable>=3.3.0',
     'pycparser>=2.21',
     'pydyf>=0.1.2',
     'pyphen>=0.12.0',
