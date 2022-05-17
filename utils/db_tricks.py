@@ -1,4 +1,5 @@
 import sqlite3
+from prettytable import from_db_cursor
 
 # Ajust dict to be used in sqlite functions
 
@@ -151,7 +152,6 @@ def update_db(db_file: str, db: str, field: str, criteria: str, dic: dict) -> No
     c.execute(create_table_sql)
 
     # Inserir linha
-
     sqlite_insert_row = f"INSERT INTO {db} VALUES ("
     for r in range(0, columns_length):
         sqlite_insert_row = sqlite_insert_row + "?"
@@ -182,22 +182,29 @@ def add_entry(db_file: str, db: str, dic: dict) -> None:
             part_1_create_table_sql = part_1_create_table_sql + ", "
 
     create_table_sql = part_1_create_table_sql + ");"
-    print('command: ', create_table_sql)
+    
     # criar BD
     c.execute(create_table_sql)
 
     # Inserir linha
-
     sqlite_insert_row = f"INSERT INTO {db} VALUES ("
     for r in range(0, columns_length):
         sqlite_insert_row = sqlite_insert_row + "?"
         if r < (columns_length - 1):
             sqlite_insert_row = sqlite_insert_row + ", "
     sqlite_insert_row = sqlite_insert_row + ")"
-
     params = tuple(dic.values())
     print(params)
     c.execute(sqlite_insert_row, params)
     conn.commit()
     c.close()
     conn.close()
+    
+def visualize_db(db_file: str, db: str) -> str:
+    connection = sqlite3.connect(db_file)
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT * FROM {db}")
+    mytable = from_db_cursor(cursor)
+    mystring = mytable.get_string()
+    print(mystring)
+    return mystring
