@@ -200,22 +200,26 @@ def add_entry(db_file: str, db: str, dic: dict) -> None:
     c.close()
     conn.close()
 
+    
+# UPDATE VALUE OF A CELL
+
 def update_cell(db_file: str, db: str, field: str, criteria: str, column_name: str, new_value: str) -> None:
     try:
         conn = sqlite3.connect(db_file)
         c = conn.cursor()
-
         sql_query = f"Update {db} {column_name} = {new_value} where {field} = {criteria}"
         c.execute(sql_query)
         conn.commit()
         c.close()
-
     except sqlite3.Error as err:
         print("Error in sqlite: ", err)
     finally:
         if conn:
             conn.close()
-    
+
+            
+# VISUALIZE DATA BASE AS PREATTY TABLE
+
 def visualize_db(db_file: str, db: str) -> str:
     connection = sqlite3.connect(db_file)
     cursor = connection.cursor()
