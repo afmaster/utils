@@ -49,6 +49,45 @@ def search_row(db_file: str, db: str, field: str, criteria: str) -> str or None:
         return None
     
 
+# Return an entire row with two criteria
+
+def search_row_with_two_criteria(db_file: str, db: str, field1: str, criteria1: str, field2: str, criteria2: str) -> str or None:
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+    try:
+        table = list(c.execute(f"SELECT * FROM {db}").description)
+
+        c.execute(f"SELECT * FROM {db}")
+        results = c.fetchall()
+        table_criteria_1 = []
+        for col in table:
+            if col[0] == field1:
+                i = table.index(col)
+                for row in results:
+                    if row[i] == criteria1:
+                        table_criteria_1.append(row)
+                    else:
+                        continue
+            else:
+                continue
+
+        for col in table:
+            if col[0] == field2:
+                i = table.index(col)
+                for item in table_criteria_1:
+                    if item[i] == criteria2:
+                        return item
+                    else:
+                        continue
+            else:
+                continue
+        return None
+    except:
+        c.close()
+        conn.close()
+        return None
+
+    
 def fetch_all(db_file: str, db: str, field: str) -> str or None:
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
