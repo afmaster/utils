@@ -103,6 +103,8 @@ def fetch_all(db_file: str, db: str, field: str) -> str or None:
         return None
 
 
+# Delete entry with one criteria
+
 def delete_entry(db_file: str, db: str, field: str, criteria: str) -> None:
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
@@ -115,6 +117,22 @@ def delete_entry(db_file: str, db: str, field: str, criteria: str) -> None:
     conn.commit()
     c.close()
     conn.close()
+
+    
+# Delete one entry with two criteria
+
+def delete_entry_with_two_criteria(db_file: str, db: str, field1: str, criteria1: str, field2: str, criteria2: str) -> None:
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+    try:
+        # c.execute(f"SELECT * FROM destination WHERE id='{chat_id}'")
+        # results = cur.fetchone()
+        c.execute(f"DELETE from {db} where {field1}= ? AND {field2}= ?", (criteria1, criteria2))
+    except:
+        pass
+    conn.commit()
+    c.close()
+    conn.close()    
 
 
 def delete_all_rows(db_file: str, db: str) -> None:
@@ -238,6 +256,26 @@ def add_entry(db_file: str, db: str, dic: dict) -> None:
     conn.commit()
     c.close()
     conn.close()
+
+        
+# Change an entire row
+
+def change_row(db_file: str, db: str, field: str, criteria: str, dic: dict) -> None:
+    try:
+        delete_entry(db_file, db, field, criteria)
+    except:
+        pass
+    add_entry(db_file, db, dic)
+
+
+# change an entire row based on two criteria
+
+def change_row_with_two_criteria(db_file: str, db: str, field1: str, criteria1: str, field2: str, criteria2: str, dic: dict) -> None:
+    try:
+        delete_entry_with_two_criteria(db_file, db, field1, criteria1, field2, criteria2)
+    except:
+        pass
+    add_entry(db_file, db, dic)
 
     
 # UPDATE VALUE OF A CELL
