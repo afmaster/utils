@@ -182,6 +182,45 @@ def create_db(db_file: str, db: str,  dic: dict) -> None:
     conn.close()
 
 
+# CREATE DB AND/OR ADD ROW IN A TABLE WITH ID
+
+def create_db_with_id(db_file: str, db: str, id_name: str, dic: dict) -> None:
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+
+    # define columns
+    columns_length = len(list(dic.items()))
+
+    # Creating string for sql command for creating bd
+    part_1_create_table_sql = f"CREATE TABLE IF NOT EXISTS {db} ({id_name} INTEGER PRIMARY KEY AUTOINCREMENT,"
+    for r in range(0, columns_length):
+        part_1_create_table_sql = part_1_create_table_sql + str(list(dic.keys())[r]) + " TEXT"
+        if r < (columns_length - 1):
+            part_1_create_table_sql = part_1_create_table_sql + ", "
+
+    create_table_sql = part_1_create_table_sql + ");"
+
+    # criar BD
+    c.execute(create_table_sql)
+
+    # Inserir linha
+    keys = str(tuple(dic.keys())).replace("'", "")
+    sqlite_insert_row = f"INSERT INTO {db}{keys} VALUES ("
+    for r in range(0, columns_length):
+        sqlite_insert_row = sqlite_insert_row + "?"
+        if r < (columns_length - 1):
+            sqlite_insert_row = sqlite_insert_row + ", "
+    sqlite_insert_row = sqlite_insert_row + ")"
+    print(sqlite_insert_row)
+
+
+    params = tuple(dic.values())
+    c.execute(sqlite_insert_row, params)
+    conn.commit()
+    c.close()
+    conn.close()
+    
+
 def update_db(db_file: str, db: str, field: str, criteria: str, dic: dict) -> None:
     conn = sqlite3.connect(db_file)
     c = conn.cursor()
@@ -277,6 +316,16 @@ def change_row_with_two_criteria(db_file: str, db: str, field1: str, criteria1: 
         pass
     add_entry(db_file, db, dic)
 
+    
+# CHANGE ROW BASED ON ID
+
+def change_row_with_id(db_file: str, db: str, id_field: str, id_num: int, dic: dict) -> None:
+    try:
+        delete_entry(db_file, db, id_field, id_num)
+    except:
+        pass
+    create_db_with_id(db_file, db, id_field, dic)
+    
     
 # UPDATE VALUE OF A CELL
 
