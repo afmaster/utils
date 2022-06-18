@@ -146,6 +146,19 @@ def delete_all_rows(db_file: str, db: str) -> None:
     c.close()
     conn.close()
 
+    
+# DELETE ENTIRE TALBE
+def delete_table(db_file: str, db: str) -> None:
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+    try:
+        c.execute(f"DROP TABLE IF EXISTS {db}")
+    except:
+        pass
+    conn.commit()
+    c.close()
+    conn.close()
+    
 
 def create_db(db_file: str, db: str,  dic: dict) -> None:
     conn = sqlite3.connect(db_file)
