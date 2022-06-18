@@ -23,6 +23,25 @@ def search_db(db_file: str, db: str, field: str, criteria: str) -> str or None:
         conn.close()
         return None
 
+
+# RETRIEVE ALL THE LINES CONTAINING A CRITERIA INSIDE A COLUMN
+
+def search_entire_db(db_file: str, db: str, field: str, criteria: str) -> list or None:
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+    try:
+        c.execute(f"SELECT * FROM {db} WHERE {field} LIKE '%{criteria}%'")
+        results = c.fetchall()
+        #item = results[0]
+        c.close()
+        conn.close()
+        return results
+    except:
+        c.close()
+        conn.close()
+        return None
+    
+    
 # return an entire row
     
 def search_row(db_file: str, db: str, field: str, criteria: str) -> str or None:
