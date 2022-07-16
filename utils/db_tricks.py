@@ -57,7 +57,23 @@ def fetch_entire_table(db_file: str, db: str) -> str or None:
         c.close()
         conn.close()
         return None
+
     
+# FETCH ENTIRE TABLE ORDER BY column
+
+def fetch_ordered_table(db_file: str, db: str, field: str) -> str or None:
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+    try:
+        c.execute(f'SELECT * FROM {db} ORDER BY {field} ASC')
+        output = c.fetchall()
+        c.close()
+        conn.close()
+        return output
+    except:
+        c.close()
+        conn.close()
+        return None
     
 # return an entire row
     
