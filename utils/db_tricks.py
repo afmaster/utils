@@ -40,6 +40,23 @@ def search_entire_db(db_file: str, db: str, field: str, criteria: str) -> list o
         c.close()
         conn.close()
         return None
+
+
+# FETCH AN ENTIRE TABLE
+
+def fetch_entire_table(db_file: str, db: str) -> str or None:
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+    try:
+        c.execute(f'SELECT * FROM {db}')
+        output = c.fetchall()
+        c.close()
+        conn.close()
+        return output
+    except:
+        c.close()
+        conn.close()
+        return None
     
     
 # return an entire row
